@@ -31,13 +31,15 @@ function getRandomTasks(tasks, count){
         tasks.splice(index, 1);
         div.appendChild(task);
     }
-    let more = document.createElement('button');
-    more.innerText = 'Показать ещё';
-    more.onclick = () => {
-        getRandomTasks(tasks, 10);
-    };
-    div.appendChild(document.createElement('br'));
-    div.appendChild(more);
+    if (tasks.length > 0) {
+        let more = document.createElement('button');
+        more.innerText = 'Показать ещё';
+        more.onclick = () => {
+            getRandomTasks(tasks, 10);
+        };
+        div.appendChild(document.createElement('br'));
+        div.appendChild(more);
+    }
 }
 
 function randomInt(min, max){
@@ -46,9 +48,11 @@ function randomInt(min, max){
 
 function getTasks(sheets){
     let tasks = [];
+    let answerFlag = $('[name=answer]:checked').length > 0;
     for (let i = 0; i < sheets.length; i++)
         for (let j = 0; j < sheets[i].Tasks.length; j++)
-            tasks.push(sheets[i].Tasks[j]);
+            if (!answerFlag || sheets[i].Tasks[j].Answer !== undefined)
+                tasks.push(sheets[i].Tasks[j]);
     return tasks;
 }
 
@@ -58,11 +62,10 @@ function filter(data){
     data = filterByLevel(data);
     return data;
 }
-
 function filterByTags(data){
     let result = [];
-    let allTags = $("input:checkbox");
-    let checkedObjects = $("input:checkbox:checked");
+    let allTags = $('[name=tag]');
+    let checkedObjects = $('[name=tag]:checked');
     let checkedValues = [];
     for (let i = 0; i < checkedObjects.length; i++)
         checkedValues.push(checkedObjects[i].value);
