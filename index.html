@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GoodMath</title>
+    <script src="https://yastatic.net/jquery/3.1.1/jquery.min.js"></script>
+    <style>
+        .inline{
+            display: inline-block
+        }
+    </style>
+</head>
+<body>
+    <form>
+        <fieldset>
+            <legend>Темы:</legend>
+            <label class="inline">
+                <input type="checkbox" name="tag" value="Геометрия" checked="checked">Геометрия
+            </label>
+            <label class="inline">
+                <input type="checkbox" name="tag" value="Графы" checked="checked">Графы
+            </label>
+            <label class="inline">
+                <input type="checkbox" name="tag" value="Комбинаторика" checked="checked">Комбинаторика
+            </label>
+            <label class="inline">
+                <input type="checkbox" name="tag" value="Теория чисел" checked="checked">Теория чисел
+            </label>
+        </fieldset>
+        <br>
+        <fieldset>
+            <legend>Дата:</legend>
+            от <input type="date" id="startDate">
+            до <input type="date" id="endDate">
+        </fieldset>
+        <br>
+        <label>
+            <input type="submit" value="Найти задачи">
+        </label>
+    </form>
+    <script src="./script.js"></script>
+</body>
+</html>
