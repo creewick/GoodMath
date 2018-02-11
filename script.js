@@ -5,7 +5,7 @@ function act(){
         let tasks = getTasks(sheets);
         getRandomTasks(tasks, 10);
     });
-    document.getElementById('submit').value = 'Найти задачи';
+    document.getElementById('submit').value = 'Подобрать задачи';
 }
 
 function getRandomTasks(tasks, count){
@@ -14,32 +14,39 @@ function getRandomTasks(tasks, count){
     for (let i = 0; i < count; i++){
         if (tasks.length === 0)
             return;
-        let task = document.createElement('div');
-        let index = randomInt(0, tasks.length - 1);
-        task.innerHTML += `<hr>${tasks[index].Task}`;
-        if (tasks[index].Image !== undefined)
-            task.innerHTML += `<br><div align="center"><img src="${tasks[index].Image}"></div>`;
-        if (tasks[index].Answer !== undefined && tasks[index].Checked === true) {
-            let answerLabel = document.createElement('div');
-            answerLabel.value = tasks[index].Answer;
-            answerLabel.innerHTML += '<b>Показать ответ</b>';
-            answerLabel.onclick = () => {
-                answerLabel.innerHTML = `<b>Ответ: ${answerLabel.value}</b>`;
-            };
-            task.appendChild(answerLabel);
-        }
-        tasks.splice(index, 1);
-        div.appendChild(task);
+            addRandomTask(tasks, div)
     }
-    if (tasks.length > 0) {
-        let more = document.createElement('button');
-        more.innerText = 'Показать ещё';
-        more.onclick = () => {
-            getRandomTasks(tasks, 10);
+    if (tasks.length > 0)
+        addMoreButton(tasks, div);
+}
+
+function addMoreButton(tasks, div){
+    let more = document.createElement('button');
+    more.innerText = 'Показать ещё';
+    more.onclick = () => {
+        getRandomTasks(tasks, 10);
+    };
+    div.appendChild(document.createElement('br'));
+    div.appendChild(more);
+}
+
+function addRandomTask(tasks, div){
+    let task = document.createElement('div');
+    let index = randomInt(0, tasks.length - 1);
+    task.innerHTML = `<hr>${tasks[index].Task}`;
+    if (tasks[index].Image !== undefined)
+        task.innerHTML += `<br><div align="center"><img src="${tasks[index].Image}"></div>`;
+    if (tasks[index].Answer !== undefined && tasks[index].Checked === true) {
+        let answerLabel = document.createElement('div');
+        answerLabel.value = tasks[index].Answer;
+        answerLabel.innerHTML += '<b>Показать ответ</b>';
+        answerLabel.onclick = () => {
+            answerLabel.innerHTML = `<b>Ответ: ${answerLabel.value}</b>`;
         };
-        div.appendChild(document.createElement('br'));
-        div.appendChild(more);
+        task.appendChild(answerLabel);
     }
+    tasks.splice(index, 1);
+    div.appendChild(task);
 }
 
 function randomInt(min, max){
