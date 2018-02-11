@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <title>GoodMath</title>
@@ -7,6 +7,12 @@
     <style>
         .inline{
             display: inline-block
+        }
+        img{
+            max-width: 50%;
+        }
+        sub{
+            margin-left: -0.4rem;
         }
     </style>
 </head>
@@ -34,10 +40,47 @@
             до <input type="date" id="endDate">
         </fieldset>
         <br>
+        <fieldset>
+            <legend>Класс:</legend>
+            от <select id="startLevel">
+                <option value="1" selected="selected">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+            </select>
+            до <select id="endLevel">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11" selected="selected">11</option>
+            </select>
+        </fieldset>
+        <br>
         <label>
-            <input type="submit" value="Найти задачи">
+            <input id="submit" type="submit" value="Найти задачи">
         </label>
     </form>
+    <div id="result"></div>
     <script src="./script.js"></script>
+    <script>
+        $('form').on('submit', (event) => {
+            event.preventDefault();
+            act();
+        });
+    </script>
 </body>
 </html>
