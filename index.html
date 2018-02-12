@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8" name="viewport" content="width=device-width; initial-scale=1">
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
     <title>GoodMath</title>
     <script src="https://yastatic.net/jquery/3.1.1/jquery.min.js"></script>
     <style>
         body{
-            width: 500px;
+            width: 640px;
             margin: 0px auto;
         }
         .inline{
@@ -35,6 +35,9 @@
             </label>
             <label class="inline">
                 <input type="checkbox" name="tag" value="Теория чисел" checked="checked">Теория чисел
+            </label>
+            <label class="inline">
+                <input type="checkbox" name="tag" value="Другое" checked="checked">Другое
             </label>
         </fieldset>
         <br>
@@ -87,6 +90,7 @@
     </form>
     <div id="result"></div>
     <script src="./script.js"></script>
+    <script src="./onload.js"></script>
     <script>
         $('form').on('submit', (event) => {
             event.preventDefault();

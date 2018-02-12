@@ -1,10 +1,8 @@
 function act(){
     document.getElementById('submit').value = 'Поиск...';
-    $.get('./data.json', (data) => {
-        let sheets = filter(data);
-        let tasks = getTasks(sheets);
-        getRandomTasks(tasks, 10);
-    });
+    let sheets = filter(data);
+    let tasks = getTasks(sheets);
+    getRandomTasks(tasks, 10);
     document.getElementById('submit').value = 'Подобрать задачи';
 }
 
@@ -14,7 +12,7 @@ function getRandomTasks(tasks, count){
     for (let i = 0; i < count; i++){
         if (tasks.length === 0)
             return;
-            addRandomTask(tasks, div)
+        addRandomTask(tasks, div);
     }
     if (tasks.length > 0)
         addMoreButton(tasks, div);
@@ -28,14 +26,17 @@ function addMoreButton(tasks, div){
     };
     div.appendChild(document.createElement('br'));
     div.appendChild(more);
+    div.appendChild(document.createElement('br'));
+    div.appendChild(document.createElement('br'));
 }
 
 function addRandomTask(tasks, div){
     let task = document.createElement('div');
     let index = randomInt(0, tasks.length - 1);
-    task.innerHTML = `<hr>${tasks[index].Task}`;
+    task.innerHTML = addTitle(tasks[index]);
+    task.innerHTML += `<br>${tasks[index].Task}<br><br>`;
     if (tasks[index].Image !== undefined)
-        task.innerHTML += `<br><div align="center"><img src="${tasks[index].Image}"></div>`;
+        task.innerHTML += `<div align="center"><img src="${tasks[index].Image}"></div>`;
     if (tasks[index].Answer !== undefined && tasks[index].Checked === true) {
         let answerLabel = document.createElement('div');
         answerLabel.value = tasks[index].Answer;
@@ -49,6 +50,15 @@ function addRandomTask(tasks, div){
     div.appendChild(task);
 }
 
+function addTitle(task){
+    let title = '<hr>';
+    title += `<b>Задача из: </b>${task.From.Title}<br>`;
+    title += `<b>По теме: </b>${task.From.Tag}<br>`;
+    title += `<b>От: </b>${task.From.Date}<br>`;
+    title += `<b>Для: </b>${task.From.Level} класса<br>`;
+    return title;
+}
+
 function randomInt(min, max){
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -58,8 +68,11 @@ function getTasks(sheets){
     let answerFlag = $('[name=answer]:checked').length > 0;
     for (let i = 0; i < sheets.length; i++)
         for (let j = 0; j < sheets[i].Tasks.length; j++)
-            if (!answerFlag || sheets[i].Tasks[j].Answer !== undefined)
-                tasks.push(sheets[i].Tasks[j]);
+            if (!answerFlag || sheets[i].Tasks[j].Answer !== undefined) {
+                let task = sheets[i].Tasks[j];
+                task.From = sheets[i];
+                tasks.push(task);
+            }
     return tasks;
 }
 
@@ -78,7 +91,7 @@ function filterByTags(data){
         checkedValues.push(checkedObjects[i].value);
     for (let i = 0; i < data.length; i++){
         let sheet = data[i];
-        if (allTags.length === checkedValues.length || checkedValues.includes(sheet.Tag))
+        if (checkedValues.includes(sheet.Tag))
             result.push(sheet);
     }
     return result;
