@@ -24,10 +24,8 @@ function addMoreButton(tasks, div){
     more.onclick = () => {
         getRandomTasks(tasks, 10);
     };
-    div.appendChild(document.createElement('br'));
+    div.innerHTML += '<hr>';
     div.appendChild(more);
-    div.appendChild(document.createElement('br'));
-    div.appendChild(document.createElement('br'));
 }
 
 function addRandomTask(tasks, div){
@@ -37,12 +35,18 @@ function addRandomTask(tasks, div){
     task.innerHTML += `<br>${tasks[index].Task}<br><br>`;
     if (tasks[index].Image !== undefined)
         task.innerHTML += `<div align="center"><img src="${tasks[index].Image}"></div>`;
-    if (tasks[index].Answer !== undefined && tasks[index].Checked === true) {
+    if ((tasks[index].Answer !== undefined || tasks[index].AnswerImage !== undefined)
+         && tasks[index].Checked === true) {
         let answerLabel = document.createElement('div');
         answerLabel.value = tasks[index].Answer;
+        answerLabel.image = tasks[index].AnswerImage;
         answerLabel.innerHTML += '<b>Показать ответ</b>';
         answerLabel.onclick = () => {
+            if (answerLabel.value === undefined)
+                answerLabel.value = '';
             answerLabel.innerHTML = `<b>Ответ: ${answerLabel.value}</b>`;
+            if (answerLabel.image !== undefined)
+                answerLabel.innerHTML += `<div align="center"><img src="${answerLabel.image}"></div>`;
         };
         task.appendChild(answerLabel);
     }
