@@ -3,17 +3,17 @@ $.get('./data.json', (context) => {
     data = context;
     let checkboxes = $('[name=tag]');
     let total = 0;
-    for (let i = 0; i < checkboxes.length; i++){
-        let checkbox = checkboxes[i];
-        let count = 0;
-        let sheets = filter(data);
-        let tasks = getTasks(sheets);
-        for (let j = 0; j < tasks.length; j++)
-            if (tasks[j].From.Tag === checkbox.value) {
-                count++;
+    let tasks = getTasks(context);
+    let counters = [];
+    for (let i = 0; i < checkboxes.length; i++)
+        counters[i] = 0;
+    for (let j = 0; j < tasks.length; j++)
+        for (let i = 0; i < checkboxes.length; i++)
+            if (tasks[j].From.Tag === checkboxes[i].value) {
+                counters[i]++;
                 total++;
             }
-        checkbox.parentElement.innerHTML += `(${count})`;
-    }
+    for (let i = 0; i < checkboxes.length; i++)
+        checkboxes[i].parentElement.innerHTML += `(${counters[i]})`;
     $('h1')[0].innerText += ` (${total})`;
 });
