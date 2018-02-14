@@ -69,10 +69,10 @@ function randomInt(min, max){
 
 function getTasks(sheets){
     let tasks = [];
-    let answerFlag = $('[name=answer]:checked').length > 0;
+    let answerFlag = $('[name=solved]:checked').length > 0;
     for (let i = 0; i < sheets.length; i++)
         for (let j = 0; j < sheets[i].Tasks.length; j++)
-            if (!answerFlag || sheets[i].Tasks[j].Answer !== undefined) {
+            if (!answerFlag || sheets[i].Tasks[j].Checked) {
                 let task = sheets[i].Tasks[j];
                 task.From = sheets[i];
                 tasks.push(task);
