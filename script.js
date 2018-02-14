@@ -72,7 +72,7 @@ function getTasks(sheets){
     let answerFlag = $('[name=solved]:checked').length > 0;
     for (let i = 0; i < sheets.length; i++)
         for (let j = 0; j < sheets[i].Tasks.length; j++)
-            if (!answerFlag || sheets[i].Tasks[j].Checked) {
+            if (!answerFlag || sheets[i].Tasks[j].Answer !== undefined) {
                 let task = sheets[i].Tasks[j];
                 task.From = sheets[i];
                 tasks.push(task);

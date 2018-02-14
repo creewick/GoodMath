@@ -14,7 +14,7 @@ $.get('./data.json', (context) => {
         for (let i = 0; i < checkboxes.length; i++)
             if (tasks[j].From.Tag === checkboxes[i].value)
                 counters[i]++;
-        if (tasks[j].Checked)
+        if (tasks[j].Answer !== undefined)
             solved++;
     }
 
