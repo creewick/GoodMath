@@ -2,6 +2,7 @@ function act(){
     document.getElementById('submit').value = 'Поиск...';
     let sheets = filter(data);
     let tasks = getTasks(sheets);
+    console.log(tasks);
     getRandomTasks(tasks, 10);
     document.getElementById('submit').value = 'Подобрать задачи';
 }
@@ -24,7 +25,7 @@ function addMoreButton(tasks, div){
     more.onclick = () => {
         getRandomTasks(tasks, 10);
     };
-    div.innerHTML += '<hr>';
+    div.appendChild(document.createElement('hr'));
     div.appendChild(more);
 }
 
@@ -72,7 +73,7 @@ function getTasks(sheets){
     let answerFlag = $('[name=answer]:checked').length > 0;
     for (let i = 0; i < sheets.length; i++)
         for (let j = 0; j < sheets[i].Tasks.length; j++)
-            if (!answerFlag || sheets[i].Tasks[j].Answer !== undefined) {
+            if (!answerFlag || sheets[i].Tasks[j].Checked) {
                 let task = sheets[i].Tasks[j];
                 task.From = sheets[i];
                 tasks.push(task);
