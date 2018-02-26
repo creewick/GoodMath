@@ -36,8 +36,7 @@ function addRandomTask(tasks, div){
     task.innerHTML += `<br>${tasks[index].Task}<br><br>`;
     if (tasks[index].Image !== undefined)
         task.innerHTML += `<div align="center"><img src="${tasks[index].Image}"></div>`;
-    if ((tasks[index].Answer !== undefined || tasks[index].AnswerImage !== undefined)
-         && tasks[index].Checked === true) {
+    if (tasks[index].Answer !== undefined || tasks[index].AnswerImage !== undefined) {
         let answerLabel = document.createElement('div');
         answerLabel.value = tasks[index].Answer;
         answerLabel.image = tasks[index].AnswerImage;
@@ -73,7 +72,7 @@ function getTasks(sheets){
     let answerFlag = $('[name=solved]:checked').length > 0;
     for (let i = 0; i < sheets.length; i++)
         for (let j = 0; j < sheets[i].Tasks.length; j++)
-            if (!answerFlag || sheets[i].Tasks[j].Checked) {
+            if (!answerFlag || sheets[i].Tasks[j].Answer !== undefined) {
                 let task = sheets[i].Tasks[j];
                 task.From = sheets[i];
                 tasks.push(task);
